@@ -1,5 +1,5 @@
-const { findOneAndUpdate, findOneAndDelete } = require("../models/sigup");
 const User = require("../models/sigup");
+
 
 const getUser = async (req, res) => {
   try {
