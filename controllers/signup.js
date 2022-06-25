@@ -3,49 +3,67 @@ const User = require("../models/sigup");
 
 const getUser = async (req, res) => {
   try {
-    const allUser = await find({});
-    res.json({
+    const allUser = await User.find({});
+    res.status(200).json({
       message: "All user found!",
       allUser: allUser,
     });
   } catch (err) {
-    res.send(err.message);
+    res.status(500).send(err.message);
   }
 };
 
 const createUser = async (req, res) => {
   try {
-    const user = await new User(req.body);
-    res.json({
+    const user = await User.create(req.body);
+    res.status(200).json({
       message: "User created succesfully",
       user: user,
     });
   } catch (err) {
-    res.send(err.message);
+    res.status(500).send(err.message);
   }
 };
 
 const updateUser = async (req, res) => {
   try {
-    const updatedUser = await findOneAndUpdate({ id: req.params.id });
-    res.json({
+    const { id: userID } = req.params;
+    const dateToUpdate = req.body;
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userID },
+      dateToUpdate
+    );
+    if (!updatedUser) {
+      return res.status(404).send(`user not found ${userID}`);
+    }
+    res.status(200).json({
       message: "User updated succesfully",
       updatedUser: updatedUser,
     });
   } catch (err) {
-    res.send(err.message);
+    res.status(500).send(err.message);
   }
 };
 
 const deleteUser = async (req, res) => {
   try {
-    const deleteUser = await findOneAndDelete({ id: req.params.id });
-    res.json({
+    const deleteUser = await User.findOneAndDelete({ _id: req.params.id });
+    res.status(200).json({
       message: "User deleted successfully",
       deleteUser: deleteUser,
     });
   } catch (err) {
-    res.send(err.message);
+    res.status(500).send(err.message);
+  }
+};
+
+const getOne = async (req, res) => {
+  try {
+    const { id: userID } = req.params;
+    const userOne = await User.findOne({ _id: userID });
+    res.send(userOne);
+  } catch (err) {
+    res.status(500).send(err.message);
   }
 };
 
@@ -54,4 +72,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  getOne,
 };
