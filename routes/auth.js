@@ -6,10 +6,14 @@ const {
   updateUser,
   deleteUser,
   getOne,
-} = require("../controllers/signup");
+} = require("../controllers/signUpController");
+
+const { loginUser } = require("../controllers/logInController");
 
 router.route("/signup").get(getUser).post(createUser);
 
 router.route("/signup/:id").get(getOne).patch(updateUser).delete(deleteUser);
+
+router.route("/login").post(loginUser);
 
 module.exports = router;

@@ -39,11 +39,11 @@ loginSchema.pre("save", function () {
 });
 
 // Hashing the password field with using bcrypt
-loginSchema.pre("save", async function () {
-  const salt = await bcrypt.genSalt();
-  const hashString = await bcrypt.hash(this.password, salt);
-  this.password = hashString;
-});
+// loginSchema.pre("save", async function () {
+//   const salt = await bcrypt.genSalt();
+//   const hashString = await bcrypt.hash(this.password, salt);
+//   this.password = hashString;
+// });
 
 // loginSchema.post("save", () => {});
 

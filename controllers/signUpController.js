@@ -1,4 +1,4 @@
-const User = require("../models/sigup");
+const User = require("../models/userModel");
 
 
 const getUser = async (req, res) => {
