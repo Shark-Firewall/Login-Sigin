@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const emailValidator = require("email-validator");
+const bcrypt = require("bcrypt");
 
 const loginSchema = new mongoose.Schema({
   name: {
@@ -35,6 +36,13 @@ const loginSchema = new mongoose.Schema({
 loginSchema.pre("save", function () {
   //Don't use anonymous function here
   this.confirm_password = undefined;
+});
+
+// Hashing the password field with using bcrypt
+loginSchema.pre("save", async function () {
+  const salt = await bcrypt.genSalt();
+  const hashString = await bcrypt.hash(this.password, salt);
+  this.password = hashString;
 });
 
 // loginSchema.post("save", () => {});
