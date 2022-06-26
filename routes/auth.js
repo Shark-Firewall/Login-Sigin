@@ -8,9 +8,11 @@ const {
   getOne,
 } = require("../controllers/signUpController");
 
+const { protectRouter } = require("../controllers/middleware");
+
 const { loginUser } = require("../controllers/logInController");
 
-router.route("/signup").get(getUser).post(createUser);
+router.route("/signup").get(protectRouter,getUser).post(createUser);
 
 router.route("/signup/:id").get(getOne).patch(updateUser).delete(deleteUser);
 

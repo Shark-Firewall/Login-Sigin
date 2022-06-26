@@ -1,10 +1,14 @@
 const express = require("express");
 const connectDB = require("./db/connect");
 const authRouter = require("./routes/auth");
+const cookieParser = require("cookie-parser");
 const app = express();
 
 //config dotenv file
 require("dotenv").config();
+
+//config cookieParser middleware
+app.use(cookieParser());
 
 //input-output are in json
 app.use(express.json());
